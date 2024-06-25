@@ -12,24 +12,31 @@ export const getHeader = () => {
 	}
 }
 
+export const getMultipartHeader = () => {
+	const token = localStorage.getItem("token")
+	return {
+		Authorization: `Bearer ${token}`,
+		"Content-Type": "multipart/form-data"
+	}
+}
+
 //This function adds a new room to the database
-export async function addRoom(photo, roomType, roomPrice){
-    const formData = new FormData()
-    formData.append("photo", photo)
-    formData.append("roomType", roomType)
-    formData.append("roomPrice", roomPrice)
+export async function addRoom(photo, roomType, roomPrice) {
+	const formData = new FormData()
+	formData.append("photo", photo)
+	formData.append("roomType", roomType)
+	formData.append("roomPrice", roomPrice)
 
+    console.log(getHeader())
 
-
-    const response = await api.post("/rooms/add/new-room", formData, {
-        headers: getHeader()
-    })
-    if(response.status === 201){
-        return true
-    }
-    else{
-        return false
-    }
+	const response = await api.post("/rooms/add/new-room", formData,{
+		headers: getMultipartHeader()
+	})
+	if (response.status === 201) {
+		return true
+	} else {
+		return false
+	}
 }
 
 //This function gets all room types from the database
@@ -73,7 +80,7 @@ export async function updateRoom(roomId, roomData){
     formData.append("roomPrice", roomData.roomPrice)
     formData.append("photo", roomData.photo)
     const response = await api.put(`/rooms/update/${roomId}`, formData, {
-        headers: getHeader()
+        headers: getMultipartHeader()
     })
     return response
 }

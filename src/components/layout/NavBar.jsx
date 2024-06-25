@@ -12,7 +12,6 @@ const NavBar = () => {
 
 	const isLoggedIn = localStorage.getItem("token")
 	const userRole = localStorage.getItem("userRole")
-	console.log(userRole)
 
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow mt-5 sticky-top">
