@@ -23,6 +23,7 @@ const Login = () => {
 		e.preventDefault()
 		const success = await loginUser(login)
 		if (success) {
+            console.log(success.token)
 			const token = success.token
 			auth.handleLogin(token)
 			navigate(redirectUrl, { replace: true })
