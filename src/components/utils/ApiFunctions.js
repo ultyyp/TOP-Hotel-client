@@ -239,8 +239,8 @@ export async function getUser(userId, token) {
 }
 
 
-//This function gets bookings by user id
-export async function getBookingsByUserId(userId, token) {
+//This function gets bookings by user sub
+export async function getBookingsByUserSub(userId, token) {
 	try {
 		const response = await api.get(`/bookings/user/${userId}/bookings`, {
 			headers: getHeader()
@@ -249,6 +249,20 @@ export async function getBookingsByUserId(userId, token) {
 	} catch (error) {
 		console.error("Error fetching bookings:", error.message)
 		throw new Error("Failed to fetch bookings")
+	}
+}
+
+
+//This functions gets fullname by user sub
+export async function getFullNameBySub(userId){
+    try {
+		const response = await api.get(`/users/${userId}/fullname`, {
+			headers: getHeader()
+		})
+		return response.data
+	} catch (error) {
+		console.error("Error fetching fullname:", error.message)
+		throw new Error("Failed to fetch fullname")
 	}
 }
 

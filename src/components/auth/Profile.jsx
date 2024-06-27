@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { deleteUser, getBookingsByUserId, getUser } from "../utils/ApiFunctions"
+import { deleteUser, getBookingsByUserSub, getUser } from "../utils/ApiFunctions"
 import { useNavigate } from "react-router-dom"
 import moment from "moment"
 
@@ -44,7 +44,7 @@ const Profile = () => {
 	useEffect(() => {
 		const fetchBookings = async () => {
 			try {
-				const response = await getBookingsByUserId(userId, token)
+				const response = await getBookingsByUserSub(userId, token)
 				setBookings(response)
 			} catch (error) {
 				console.error("Error fetching bookings:", error.message)

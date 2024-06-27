@@ -3,7 +3,7 @@ import moment from "moment"
 import { useState } from "react"
 import { Form, FormControl, Button } from "react-bootstrap"
 import BookingSummary from "./BookingSummary"
-import { bookRoom, getRoomById } from "../utils/ApiFunctions"
+import { bookRoom, getRoomById, getFullNameBySub } from "../utils/ApiFunctions"
 import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../auth/AuthProvider"
 
@@ -12,11 +12,14 @@ const BookingForm = () => {
 	const [isSubmitted, setIsSubmitted] = useState(false)
 	const [errorMessage, setErrorMessage] = useState("")
 	const [roomPrice, setRoomPrice] = useState(0)
+	const [fullName, setFullName] = useState("")
 
 const currentUser = localStorage.getItem("userId")
 
+
+
 	const [booking, setBooking] = useState({
-		guestFullName: "",
+		guestFullName: fullName,
 		guestEmail: currentUser,
 		checkInDate: "",
 		checkOutDate: "",
@@ -46,6 +49,29 @@ const currentUser = localStorage.getItem("userId")
 	useEffect(() => {
 		getRoomPriceById(roomId)
 	}, [roomId])
+
+	useEffect(() => {
+		const fetchFullName = async () => {
+		  try {
+			console.log("eeee")
+			const response = await getFullNameBySub(currentUser);
+			console.log(response);
+			setFullName(response.fullName);
+			setBooking((prevBooking) => ({
+			  ...prevBooking,
+			  guestFullName: response, // Ensure guestFullName is always defined
+			}));
+		  } catch (error) {
+			console.error("Error fetching full name:", error);
+		  }
+		};
+	
+		if (currentUser) {
+		  fetchFullName();
+		}
+	  }, [currentUser]);
+
+	
 
 	const calculatePayment = () => {
 		const checkInDate = moment(booking.checkInDate)
@@ -104,7 +130,7 @@ const currentUser = localStorage.getItem("userId")
 							<h4 className="card-title">Reserve Room</h4>
 
 							<Form noValidate validated={validated} onSubmit={handleSubmit}>
-								<Form.Group>
+							<Form.Group>
 									<Form.Label htmlFor="guestFullName" className="hotel-color">
 										Fullname
 									</Form.Label>
@@ -116,6 +142,7 @@ const currentUser = localStorage.getItem("userId")
 										value={booking.guestFullName}
 										placeholder="Enter your fullname"
 										onChange={handleInputChange}
+										disabled
 									/>
 									<Form.Control.Feedback type="invalid">
 										Please enter your fullname.
