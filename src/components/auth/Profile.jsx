@@ -56,10 +56,12 @@ const Profile = () => {
 	}, [userId])
 
 	const handleDeleteAccount = async () => {
+		console.log("handle delete")
 		const confirmed = window.confirm(
 			"Are you sure you want to delete your account? This action cannot be undone."
 		)
 		if (confirmed) {
+			console.log("confirmed")
 			await deleteUser(userId)
 				.then((response) => {
 					setMessage(response.data)
