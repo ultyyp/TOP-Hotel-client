@@ -10,14 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/x-charts": "^7.23.2",
+    "@mui/x-date-pickers": "^7.23.3",
     "axios": "^1.5.0",
     "bootstrap": "^5.3.2",
     "date-fns": "^2.30.0",
-     "jwt-decode": "^3.1.2",
+    "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
     "react-date-range": "^1.4.0",
+    "react-datepicker": "^7.6.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.16.0"
