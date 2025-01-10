@@ -238,6 +238,20 @@ export async function getUser(userId, token) {
 	}
 }
 
+//This function gets all users
+export async function getAllUsers() {
+    try {
+        const response = await api.get(`/users/all`, {
+            headers: getHeader()
+        });
+        return response.data;
+    } catch (error) {
+		console.log(error.message)
+		console.log(error)
+        throw new Error(`Error fetching users: ${error.message}`);
+    }
+}
+
 
 //This function gets bookings by user sub
 export async function getBookingsByUserSub(userId, token) {
